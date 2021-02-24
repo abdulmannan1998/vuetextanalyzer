@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="rd-cont" >
-        <label class="text" style="font-weight:bold; font-size: 1.1vw;">Choose Your Options Below</label>
+        <label class="text" style="font-weight:bold; font-size: 1.1vw;">Choose Your Options</label>
         <div class="rd-wrapper" v-for="option in options" :key="option.id">
           <input class="state" type="checkbox" name="app" :checked="option.checked" v-on:change="markComplete(option)" :id="option.id" :value="option.id">
           <label class="label" :for="option.id">
@@ -132,7 +132,16 @@ export default {
     function result(){
       const avgReadSpeed = 4; //taken from the internet, units words/sec
       
-
+      readSpeed = 0; 
+      wordCount = 0;
+      noOfLetters = 0;
+      longest = '';
+      avg = 0;
+      lenMedian = 0;
+      median = '';
+      topFive = [];
+      txtlang = 'en';
+      
       let words = newText.value.replace(/[^A-Za-z0-9_ğüşıöç]/g, " ").split(" ")
       words = words.filter(word => word != " " && word != "");
       wordCount = words.length;
@@ -148,9 +157,11 @@ export default {
           }
         });
 
+        avg = 0;
         words.forEach((word)=>{
           avg = avg + word.length;
         });
+        // avg = 0;
         avg = avg / wordCount;
 
         readSpeed = wordCount/avgReadSpeed;
@@ -231,6 +242,7 @@ export default {
         // console.log(topFive);
         // console.log(txtlang);
       }
+      refreshList();
       options[0].result = wordCount;
       options[1].result = noOfLetters;
       options[2].result = longest;
@@ -238,10 +250,10 @@ export default {
       options[4].result = readSpeed;
       options[5].result = lenMedian;
       options[6].result = median;
-      options[7].result = topFive;
+      options[7].result = topFive.reduce(function(accumulator, currentValue){return accumulator + ", " + currentValue});
       options[8].result = txtlang;
       buttonFlag = true;
-      refreshList();
+      
       
     }
 
