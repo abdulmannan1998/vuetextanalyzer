@@ -122,12 +122,12 @@ export default {
     let readSpeed; 
     let wordCount;
     let noOfLetters;
-    let longest = '';
-    let avg = 0;
+    let longest;
+    let avg;
     let lenMedian;
     let median;
     let topFive;
-    let txtlang = 'en';
+    let txtlang;
 
     function result(){
       const avgReadSpeed = 4; //taken from the internet, units words/sec
@@ -140,7 +140,7 @@ export default {
       lenMedian = 0;
       median = '';
       topFive = [];
-      txtlang = 'en';
+      txtlang = '';
       
       let words = newText.value.replace(/[^A-Za-z0-9_ğüşıöç]/g, " ").split(" ")
       words = words.filter(word => word != " " && word != "");
@@ -208,6 +208,7 @@ export default {
         if (turkArray.length != 0) {
           txtlang ='tur';
         }
+        else{txtlang = 'en'}
 
         // console.log(wordCount);
         // console.log(words);
@@ -228,9 +229,10 @@ export default {
         avg = 0;
         readSpeed = '0 secs';
         lenMedian = 0;
-        median = 'No Input Yet'
-        topFive = 'No Input Yet'
-        txtlang = 'No Input Yet'
+        median = 'No Input Yet';
+        topFive = ['No Input Yet'];
+        txtlang = 'No Input Yet';
+        //console.log(txtlang);
 
         // console.log(wordCount);
         // console.log(noOfLetters);
@@ -242,6 +244,7 @@ export default {
         // console.log(topFive);
         // console.log(txtlang);
       }
+      buttonFlag = true;
       refreshList();
       options[0].result = wordCount;
       options[1].result = noOfLetters;
@@ -252,7 +255,7 @@ export default {
       options[6].result = median;
       options[7].result = topFive.reduce(function(accumulator, currentValue){return accumulator + ", " + currentValue});
       options[8].result = txtlang;
-      buttonFlag = true;
+      
       
       
     }
